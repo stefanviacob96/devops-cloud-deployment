@@ -1,85 +1,89 @@
-Project 4 – Cloud Deployment with AWS, Terraform & GitHub Actions
+# Cloud Deployment with AWS, Terraform & GitHub Actions
 
-Overview
+## Overview
 
-This project demonstrates a complete CI/CD pipeline that deploys a Dockerized application to AWS EC2 using GitHub Actions and Terraform.
+End-to-end CI/CD pipeline that automatically deploys a Dockerized application to AWS EC2 using GitHub Actions and Terraform.
 
-The deployment is fully automated:
-- Code push → triggers GitHub Actions
-- GitHub Actions → connects to EC2 via SSH
-- EC2 → pulls latest Docker image from GHCR
-- Application is redeployed using Docker Compose
+Flow:
+git push → GitHub Actions → SSH → EC2 → Docker Compose → Application live
 
 ---
 
-Tech Stack
+## Tech Stack
 
 - AWS EC2
 - Terraform
 - Docker & Docker Compose
 - GitHub Actions
-- GHCR (GitHub Container Registry)
+- GitHub Container Registry (GHCR)
 - Linux (Ubuntu)
 
 ---
 
-Architecture
+## Key Features
 
-1. Application image is built and pushed to GHCR (Project 2)
-2. GitHub Actions pipeline runs on push
-3. SSH connection is established to EC2
-4. Docker Compose pulls latest image
-5. Container is recreated
-6. Health check verifies deployment
-
----
-
-Deployment Flow
-git push → GitHub Actions → SSH → EC2 → docker compose → app live
-
+- Automated deployment via GitHub Actions
+- Remote execution over SSH with secure key handling
+- Infrastructure provisioned with Terraform
+- Container-based deployment using Docker Compose
+- Health checks to verify successful deployment
+- No manual steps required after initial setup
 
 ---
 
-Key Features
+## Architecture
 
-- Automated remote deployment via SSH
-- Secure key handling using GitHub Secrets
-- Infrastructure defined with Terraform
-- Zero manual deployment steps
-- Health check after deployment
-
----
-
-Project Structure
-.github/workflows/deploy.yml # CI/CD pipeline
-terraform/main.tf # Infrastructure as code
-
+1. Application image is built and pushed to GHCR
+2. GitHub Actions pipeline triggers on push to `main`
+3. Runner connects to EC2 via SSH
+4. EC2 pulls the latest image
+5. Docker Compose recreates the container
+6. Health check validates deployment
 
 ---
 
-Lessons Learned
+## Project Structure
 
-- Handling SSH keys securely in CI/CD
-- Debugging GitHub Actions runners
-- Managing EC2 lifecycle (start/stop, IP changes)
-- Dealing with container startup timing issues
-- Building reliable deployment health checks
+```
+.github/workflows/deploy.yml   # CI/CD pipeline
+terraform/main.tf             # Infrastructure as code
+README.md
+```
 
 ---
 
-How to Run
+## How to Run
 
-1. Provision infrastructure with Terraform
+1. Provision infrastructure:
+   ```bash
+   terraform init
+   terraform apply
+   ```
+
 2. Configure GitHub Secrets:
-   - EC2_HOST
-   - EC2_USER
-   - EC2_SSH_KEY_B64
-3. Push to main branch
+   - `EC2_HOST`
+   - `EC2_USER`
+   - `EC2_SSH_KEY_B64`
+
+3. Push to main:
+   ```bash
+   git push origin main
+   ```
 
 Deployment runs automatically.
 
 ---
 
-Status
+## Lessons Learned
 
-Production-like deployment working with automated CI/CD pipeline.
+- Managing SSH authentication in CI/CD pipelines
+- Debugging network issues between GitHub runners and EC2
+- Handling dynamic EC2 public IPs (Elastic IP recommended)
+- Building reliable deployment health checks
+- Structuring reproducible infrastructure with Terraform
+
+---
+
+## Status
+
+Production-like deployment pipeline fully functional.
