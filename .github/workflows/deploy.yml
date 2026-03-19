@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup SSH
+      - name: Create SSH directory
+        run: mkdir -p ~/.ssh
+
+      - name: Write deploy key
         run: |
-          mkdir -p ~/.ssh
           printf '%s' "${{ secrets.EC2_SSH_KEY_B64 }}" | tr -d '\r\n ' | base64 -d > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+
+      - name: Add host to known_hosts
+        run: |
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Test SSH
