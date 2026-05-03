@@ -1,15 +1,15 @@
-Cloud Deployment with AWS, Terraform & GitHub Actions
+# Cloud Deployment with AWS, Terraform & GitHub Actions
 
-Overview
+## Overview
 
 End-to-end CI/CD pipeline that automatically deploys a Dockerized application to AWS EC2 using GitHub Actions and Terraform.
 
-Flow:
-git push → GitHub Actions → SSH → EC2 → Docker Compose → Application live
+
+### Flow: git push → GitHub Actions → SSH → EC2 → Docker Compose → Application live
 
 ---
 
-Tech Stack
+## Tech Stack
 
 - AWS EC2
 - Terraform
@@ -20,7 +20,7 @@ Tech Stack
 
 ---
 
-Key Features
+## Key Features
 
 - Automated deployment via GitHub Actions
 - Remote execution over SSH with secure key handling
@@ -31,7 +31,7 @@ Key Features
 
 ---
 
-Architecture
+## Architecture
 
 1. Application image is built and pushed to GHCR
 2. GitHub Actions pipeline triggers on push to `main`
@@ -42,18 +42,7 @@ Architecture
 
 ---
 
-Project Structure
-
-
-.github/workflows/deploy.yml
-CI/CD pipeline
-terraform/main.tf
-Infrastructure as code
-README.md
-
----
-
-How to Run
+## How to Run
 
 1. Provision infrastructure:
    ```bash
@@ -75,7 +64,7 @@ Deployment runs automatically.
 
 ---
 
-Lessons Learned
+## Lessons Learned
 
 - Managing SSH authentication in CI/CD pipelines
 - Debugging network issues between GitHub runners and EC2
@@ -85,6 +74,6 @@ Lessons Learned
 
 ---
 
-Status
+## Status
 
 Production-like deployment pipeline fully functional.
